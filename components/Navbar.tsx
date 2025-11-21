@@ -14,7 +14,7 @@ const Navbar: React.FC = () => {
             alt="Sparkles Logo"
             className="h-8"
           />
-          <span className="font-bold text-lg text-blue-700">Sparkleshine Mount Ommaney</span>
+          <span className="font-bold text-lg text-blue-800 italic bname">Sparkleshine Mount Ommaney</span>
         </div>
 
         <div className="hidden md:flex items-center space-x-6">
