@@ -16,6 +16,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <meta name="google-site-verification" content="google0c18bffadcc1052b" />
+        <meta name="description" content="Professional car wash services in Mount Ommaney. Book online now!" />
+        <meta property="og:title" content="Sparkle Shine Car Wash – Mount Ommaney" />
+        <meta property="og:description" content="Professional car wash services in Mount Ommaney. Book online now!" />
+        <meta property="og:url" content="https://sparkleshine-mount-ommaney.vercel.app" />
+        <meta property="og:type" content="website" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#4f46e5" />
       </head>
