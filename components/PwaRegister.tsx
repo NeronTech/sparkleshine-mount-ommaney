@@ -57,7 +57,7 @@ export default function PwaRegister({
             flex flex-col sm:flex-row items-center sm:justify-between 
             z-50 space-y-2 sm:space-y-0 sm:space-x-4
             animate-fade-in-up animate-bounce-slow
-            w-[90%] max-w-xs sm:max-w-md
+            max-w-xs sm:max-w-md
           "
         >
           <span className="font-medium text-center sm:text-left text-sm sm:text-base">
