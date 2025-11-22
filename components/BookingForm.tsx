@@ -36,6 +36,7 @@ const BookingForm: React.FC = () => {
     message: string;
     type: "success" | "error";
   } | null>(null);
+  const [isStandalone, setIsStandalone] = useState(false);
 
   useEffect(() => {
     const fetchOptions = async () => {
@@ -54,6 +55,45 @@ const BookingForm: React.FC = () => {
 
     fetchOptions();
   }, []);
+
+  useEffect(() => {
+    const standalone =
+      window.matchMedia("(display-mode: standalone)").matches ||
+      (window.navigator as any).standalone === true;
+
+    setIsStandalone(standalone);
+
+    // Load saved fields only if PWA installed
+    if (standalone) {
+      const savedFullName = localStorage.getItem("full_name");
+      const savedPhone = localStorage.getItem("phone_number");
+      const savedEmail = localStorage.getItem("email");
+
+      setFormData((prev) => ({
+        ...prev,
+        full_name: savedFullName || "",
+        phone_number: savedPhone || "",
+        email: savedEmail || "",
+      }));
+    }
+
+    // Detect when newly installed
+    const handleInstalled = () => {
+      console.log("PWA Installed!");
+      setIsStandalone(true);
+    };
+
+    window.addEventListener("appinstalled", handleInstalled);
+    return () => window.removeEventListener("appinstalled", handleInstalled);
+  }, []);
+
+  useEffect(() => {
+    if (!isStandalone) return; // only save when installed
+
+    localStorage.setItem("full_name", formData.full_name);
+    localStorage.setItem("phone_number", formData.phone_number);
+    localStorage.setItem("email", formData.email);
+  }, [formData.full_name, formData.phone_number, formData.email, isStandalone]);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -97,9 +137,9 @@ const BookingForm: React.FC = () => {
       console.log(result);
       showToast("Booking submitted successfully!", "success");
       setFormData({
-        full_name: "",
-        phone_number: "",
-        email: "",
+        full_name: localStorage.getItem("full_name") || "",
+        phone_number: localStorage.getItem("phone_number") || "",
+        email: localStorage.getItem("email") || "",
         preferred_date: "",
         preferred_time: "",
         vehicle_type: "",
