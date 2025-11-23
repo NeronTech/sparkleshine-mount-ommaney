@@ -4,8 +4,8 @@ import PwaRegister from "../components/PwaRegister";
 import PageLoader from "../components/PageLoader";
 
 export const metadata = {
-  title: "SPARKLESHINE MOUNT OMMANEY",
-  description: "Sparkleshine Mount Ommaney | Car Wash & Detailing",
+  title: "SPARKLES MOUNT OMMANEY",
+  description: "Sparkles Mount Ommaney | Car Wash & Detailing",
 };
 
 export default function RootLayout({
@@ -26,7 +26,7 @@ export default function RootLayout({
         />
         <meta
           property="og:title"
-          content="Sparkle Shine Car Wash – Mount Ommaney"
+          content="Sparkles Car Wash – Mount Ommaney"
         />
         <meta
           property="og:description"
@@ -34,7 +34,7 @@ export default function RootLayout({
         />
         <meta
           property="og:url"
-          content="https://sparkleshine-mount-ommaney.vercel.app"
+          content="https://sparkles-mount-ommaney.vercel.app"
         />
         <meta property="og:type" content="website" />
         <link rel="manifest" href="/manifest.json" />

@@ -74,8 +74,8 @@ const HeroSlider: React.FC = () => {
       <section id="about" className="py-20 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-secondary mb-4 opacity-0 animate-fade-in-up">
-              Why Choose Sparkleshine Mount Ommaney?
+            <h2 className="text-4xl font-bold text-secondary mb-4 opacity-0 animate-fade-in-up bname">
+              Why Choose Sparkles Mount Ommaney?
             </h2>
             <p className="text-xl text-gray-600 opacity-0 animate-fade-in-up stagger-1">
               Experience the difference with our premium car care services

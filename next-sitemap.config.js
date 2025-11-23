@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: 'https://sparkleshine-mount-ommaney.vercel.app',
+  siteUrl: 'https://sparkles-mount-ommaney.vercel.app/',
   generateRobotsTxt: true,
   generateIndexSitemap: true,
   sitemapSize: 5000,

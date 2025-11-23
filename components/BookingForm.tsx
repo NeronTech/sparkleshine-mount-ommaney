@@ -299,7 +299,7 @@ const BookingForm: React.FC = () => {
             Ready to Give Your Car the Treatment It Deserves?
           </h2>
           <p className="bname text-xl mb-8 opacity-0 animate-fade-in-up stagger-1">
-            Book your appointment today and experience the Sparkleshine Mount
+            Book your appointment today and experience the Sparkles Mount
             Ommaney difference
           </p>
           <a
