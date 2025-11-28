@@ -13,7 +13,7 @@ interface BookingFormData {
 }
 
 const GAS_URL =
-  "https://script.google.com/macros/s/AKfycbz7lB9cnqLSfaqqUFtgHbrzIElhJTevkdG0EBa8TGkSY1636rULasOrvfrJFloWaqO4EQ/exec"; // replace with your GAS URL
+  "https://script.google.com/macros/s/AKfycbyH10orejwfIvZccYUZSanHA6_uaNdAdAkIm9z43oL53_Q6HnBrzuYJaGcmiyc_lyBS-Q/exec"; // replace with your GAS URL
 
 const BookingForm: React.FC = () => {
   const [formData, setFormData] = useState<BookingFormData>({
