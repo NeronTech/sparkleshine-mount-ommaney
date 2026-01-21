@@ -1,99 +1,204 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import React, { useState } from "react";
 
-export default function FeedbackForm() {
-  const [name, setName] = useState('');
-  const [service, setService] = useState('');
-  const [rating, setRating] = useState('');
-  const [comment, setComment] = useState('');
-  const [loading, setLoading] = useState(false);
+interface FeedbackFormData {
+  name: string;
+  service: string;
+  rating: string;
+  comment: string;
+}
 
-  async function submitFeedback() {
-    if (!rating || !comment.trim()) {
-      alert('Please provide rating and comment');
+const GAS_URL =
+  "https://script.google.com/macros/s/AKfycbybfHbwtyyyULO1CBwgRVCI99CZpXvcXajZbZLMS8ZJyw0gMKYmIKj3jkApLHyYqzBO8Q/exec"; // replace
+
+const FeedbackForm: React.FC = () => {
+  const [formData, setFormData] = useState<FeedbackFormData>({
+    name: "",
+    service: "",
+    rating: "",
+    comment: "",
+  });
+
+  const [submitting, setSubmitting] = useState(false);
+  const [toast, setToast] = useState<{
+    message: string;
+    type: "success" | "error";
+  } | null>(null);
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const showToast = (
+    message: string,
+    type: "success" | "error" = "success"
+  ) => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 3000);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!formData.rating || !formData.comment.trim()) {
+      showToast("Please provide rating and feedback.", "error");
       return;
     }
 
-    setLoading(true);
+    setSubmitting(true);
 
     try {
-      const res = await fetch(
-        'YOUR_APPS_SCRIPT_WEB_APP_URL',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: name.trim(),
-            service: service.trim(),
-            rating,
-            comment: comment.trim(),
-          }),
-        }
-      );
+      const payload = {
+        action: "feedback",
+        name: formData.name,
+        service: formData.service,
+        rating: formData.rating,
+        comment: formData.comment,
+      };
 
-      if (!res.ok) throw new Error('Request failed');
+      const res = await fetch(GAS_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload),
+      });
 
-      alert('Thank you for your feedback!');
+      const result = await res.json();
+      console.log(result);
 
-      // reset form
-      setName('');
-      setService('');
-      setRating('');
-      setComment('');
+      showToast("Thank you for your feedback!", "success");
+
+      setFormData({
+        name: "",
+        service: "",
+        rating: "",
+        comment: "",
+      });
     } catch (err) {
-      alert('Submission failed');
+      console.error(err);
+      showToast("Failed to submit feedback.", "error");
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
-  }
+  };
 
   return (
-    <section className="bg-white rounded-xl shadow p-4 mt-4">
-      <h5 className="text-lg font-semibold mb-3">Customer Feedback</h5>
+    <section id="feedback" className="py-16 px-4 bg-white">
+      <div className="max-w-2xl mx-auto">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold mb-2">Customer Feedback</h2>
+          <p className="text-gray-600">
+            Tell us how we did — your feedback matters!
+          </p>
+        </div>
 
-      <input
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Your name (optional)"
-        className="w-full border rounded px-3 py-2 mb-2"
-      />
+        <div className="bg-blue-50 p-6 rounded-2xl border">
+          <form onSubmit={handleSubmit} className="grid gap-4">
+            {/* Name */}
+            <input
+              type="text"
+              name="name"
+              placeholder="Your Name (optional)"
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full px-4 py-3 border rounded-lg"
+            />
 
-      <input
-        value={service}
-        onChange={(e) => setService(e.target.value)}
-        placeholder="Service used"
-        className="w-full border rounded px-3 py-2 mb-2"
-      />
+            {/* Service */}
+            <input
+              type="text"
+              name="service"
+              placeholder="Service Used"
+              value={formData.service}
+              onChange={handleChange}
+              className="w-full px-4 py-3 border rounded-lg"
+            />
 
-      <select
-        value={rating}
-        onChange={(e) => setRating(e.target.value)}
-        className="w-full border rounded px-3 py-2 mb-2"
-      >
-        <option value="">Rate the service</option>
-        <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
-        <option value="4">⭐⭐⭐⭐ Very Good</option>
-        <option value="3">⭐⭐⭐ Good</option>
-        <option value="2">⭐⭐ Fair</option>
-        <option value="1">⭐ Poor</option>
-      </select>
+            {/* Rating */}
+            <select
+              name="rating"
+              value={formData.rating}
+              onChange={handleChange}
+              className="w-full px-4 py-3 border rounded-lg"
+              required
+            >
+              <option value="">Rate the Service</option>
+              <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+              <option value="4">⭐⭐⭐⭐ Very Good</option>
+              <option value="3">⭐⭐⭐ Good</option>
+              <option value="2">⭐⭐ Fair</option>
+              <option value="1">⭐ Poor</option>
+            </select>
 
-      <textarea
-        value={comment}
-        onChange={(e) => setComment(e.target.value)}
-        placeholder="Your feedback"
-        className="w-full border rounded px-3 py-2 mb-3"
-        rows={4}
-      />
+            {/* Comment */}
+            <textarea
+              name="comment"
+              placeholder="Your Feedback"
+              value={formData.comment}
+              onChange={handleChange}
+              className="w-full px-4 py-3 border rounded-lg"
+              rows={4}
+              required
+            ></textarea>
 
-      <button
-        onClick={submitFeedback}
-        disabled={loading}
-        className="w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700 disabled:opacity-60"
-      >
-        {loading ? 'Submitting…' : 'Submit'}
-      </button>
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg flex items-center justify-center"
+              disabled={submitting}
+            >
+              {submitting ? (
+                <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-5 h-5 mr-2"></span>
+              ) : null}
+              {submitting ? "Submitting..." : "Submit Feedback"}
+            </button>
+          </form>
+        </div>
+      </div>
+
+      {/* Toast */}
+      {toast && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
+          <div
+            className={`px-6 py-3 rounded-lg shadow-lg opacity-90 animate-fade-in-out ${
+              toast.type === "success"
+                ? "bg-green-600 text-white"
+                : "bg-red-600 text-white"
+            }`}
+          >
+            {toast.message}
+          </div>
+        </div>
+      )}
+
+      <style jsx>{`
+        @keyframes fade-in-out {
+          0% {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          10% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          90% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          100% {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+        }
+        .animate-fade-in-out {
+          animation: fade-in-out 3s ease forwards;
+        }
+      `}</style>
     </section>
   );
-}
+};
+
+export default FeedbackForm;

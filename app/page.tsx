@@ -5,6 +5,7 @@ import BookingForm from '../components/BookingForm';
 import Location from '../components/Location';
 import Footer from '../components/Footer';
 import BackToTop from '../components/BackToTop';
+import FeedbackForm from '../components/FeedbackForm';
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
         <Services />
         <BookingForm />
         <Location />
+        <FeedbackForm />
       </main>
       <Footer />
       <BackToTop />
