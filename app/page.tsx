@@ -6,6 +6,7 @@ import Location from '../components/Location';
 import Footer from '../components/Footer';
 import BackToTop from '../components/BackToTop';
 import FeedbackForm from '../components/FeedbackForm';
+import Testimonials from '../components/Testimonials';
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <main className="pt-20">
         <HeroSlider />
         <Services />
+        <Testimonials />
         <BookingForm />
         <Location />
         <FeedbackForm />

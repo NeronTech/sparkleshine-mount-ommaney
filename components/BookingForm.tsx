@@ -13,7 +13,7 @@ interface BookingFormData {
 }
 
 const GAS_URL =
-  "https://script.google.com/macros/s/AKfycbybfHbwtyyyULO1CBwgRVCI99CZpXvcXajZbZLMS8ZJyw0gMKYmIKj3jkApLHyYqzBO8Q/exec"; // replace with your GAS URL
+  "https://script.google.com/macros/s/AKfycby1Ku5LIV-voU1k5IGYqnbsngr4abWnP6HhgRG0k5_xEMomRturT5J12dIzeslNigXirg/exec"; // replace with your GAS URL
 
 const BookingForm: React.FC = () => {
   const [formData, setFormData] = useState<BookingFormData>({
@@ -291,23 +291,6 @@ const BookingForm: React.FC = () => {
               </button>
             </form>
           </div>
-        </div>
-      </section>
-      <section className="py-20 px-6 bg-secondary text-white relative floating-bubbles">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="bname text-4xl font-bold mb-6 opacity-0 animate-fade-in-up">
-            Ready to Give Your Car the Treatment It Deserves?
-          </h2>
-          <p className="bname text-xl mb-8 opacity-0 animate-fade-in-up stagger-1">
-            Book your appointment today and experience the Sparkles Mount
-            Ommaney difference
-          </p>
-          <a
-            href="#booking"
-            className="btn bg-blue-600 text-white px-4 py-2 !rounded-button font-semibold hover:scale-105"
-          >
-            Book Now
-          </a>
         </div>
       </section>
       {/* Toast Notification */}
